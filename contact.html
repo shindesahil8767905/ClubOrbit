@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="Contact ClubOrbit — Reach our community team, support desk, or browse frequently asked questions.">
+  <title>Contact & Help Center — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="clubs.html" class="nav-link">Clubs</a>
+          <a href="discussions.html" class="nav-link">Discussions</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link active">Contact</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search help, topics..." onkeydown="if(event.key==='Enter') notify('Searching help documentation...');">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Support ticket #CO-8910 resolved</p>
+                    <small>Yesterday</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="contact-page-container">
+        
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">WE'RE ALL EARS</div>
+            <h1>Let's start a <span>conversation.</span></h1>
+            <p>
+              Whether you have a product question, want to partner with us, or need help with a club —
+              our friendly support team is here for you.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-layout">
+          <!-- FORM PANEL -->
+          <section class="contact-form-panel">
+            <span class="eyebrow">SEND US A DIRECT MESSAGE</span>
+            <h2>What's on your mind?</h2>
+            <p>Fill out the fields below and our team will get back to you within 24 hours.</p>
+
+            <form class="contact-form" onsubmit="event.preventDefault(); notify('Message received! Support Ticket #CO-9214 created.'); this.reset();">
+              <div class="form-row">
+                <label>Your Full Name<input required placeholder="e.g. Maya Lin"></label>
+                <label>Email Address<input type="email" required placeholder="maya@example.com"></label>
+              </div>
+              <label>Topic
+                <select required>
+                  <option value="">Choose a topic</option>
+                  <option>General Inquiries</option>
+                  <option>Club Leadership Support</option>
+                  <option>Event Hosting</option>
+                  <option>Safety & Moderation</option>
+                  <option>Partnerships & Sponsorships</option>
+                </select>
+              </label>
+              <label>Subject<input required placeholder="Brief summary of your inquiry"></label>
+              <label>Message<textarea required rows="4" placeholder="How can we help? Please provide as much detail as possible..."></textarea></label>
+              <button class="btn btn-primary btn-lg" type="submit">Send Message →</button>
+            </form>
+          </section>
+
+          <!-- CONTACT ASIDE -->
+          <aside class="contact-aside">
+            <div class="contact-info-card">
+              <span class="contact-icon lavender">✉️</span>
+              <h3>Direct Email Support</h3>
+              <b>hello@cluborbit.example</b>
+              <small>Mon – Fri, 9:00 AM – 6:00 PM IST</small>
+            </div>
+
+            <div class="contact-info-card">
+              <span class="contact-icon mint">💬</span>
+              <h3>Community Discord</h3>
+              <b>discord.gg/cluborbit</b>
+              <small>Real-time chat with 4,000+ creators</small>
+            </div>
+
+            <div class="contact-note">
+              <span style="font-size:24px;">🛡️</span>
+              <div>
+                <b>Safety & Trust Priority</b>
+                <p>Safety reports and code-of-conduct violations are reviewed within 1 hour by our emergency task force.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- FAQ ACCORDION SECTION -->
+        <section id="faqs" class="faq-section">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">COMMON QUESTIONS</div>
+              <h2>Frequently asked <span>questions.</span></h2>
+              <p>Everything you need to know about joining and hosting communities on ClubOrbit.</p>
+            </div>
+          </div>
+
+          <div class="faq-grid">
+            <details class="faq-item" open>
+              <summary><span>Is ClubOrbit free to use?</span><span class="faq-plus">+</span></summary>
+              <p>Yes! Discovering clubs, joining communities, participating in discussions, and RSVPing for regular events is 100% free forever for all members.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary><span>How do I create and lead a club?</span><span class="faq-plus">+</span></summary>
+              <p>Click '+ Create a Club' on the Clubs page to configure your club name, category, rules, and banner. As a lead, you receive administrative privileges to manage members, pin announcements, and host events.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary><span>Can I host online events as well as in-person meetups?</span><span class="faq-plus">+</span></summary>
+              <p>Yes, we support both formats seamlessly. When hosting an event, simply choose between Virtual (Zoom/Discord/Meet link) or In-Person (physical venue address). Members receive calendar confirmations.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary><span>How is moderation and community safety handled?</span><span class="faq-plus">+</span></summary>
+              <p>Every club has designated moderators with tools to pin, remove spam, ban bad actors, and maintain kind, inclusive spaces. We also maintain a platform-wide code of conduct.</p>
+            </details>
+
+            <details class="faq-item">
+              <summary><span>What tools do club leaders get?</span><span class="faq-plus">+</span></summary>
+              <p>Club hosts get member management controls, role assigners (Admin, Moderator, Member), pinned announcements, event ticketing, and an analytics overview of discussions.</p>
+            </details>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/contact</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

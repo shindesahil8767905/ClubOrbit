@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="About ClubOrbit — Our mission, values, how it works, and the team building spaces for curious minds.">
+  <title>About Us & Our Mission — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="clubs.html" class="nav-link">Clubs</a>
+          <a href="discussions.html" class="nav-link">Discussions</a>
+          <a href="about.html" class="nav-link active">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search clubs, topics..." onkeydown="if(event.key==='Enter') window.location.href='clubs.html';">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Welcome to ClubOrbit! Check out How It Works.</p>
+                    <small>Today</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="about-page-container">
+        
+        <!-- ABOUT HERO -->
+        <section class="about-hero">
+          <span class="eyebrow">✨ A LITTLE ABOUT OUR MISSION</span>
+          <h1>The internet feels better<br>when it feels <span>like us.</span></h1>
+          <p>
+            ClubOrbit was founded on a simple truth: real belonging shouldn't happen by accident.
+            We help people discover communities where niche interests turn into friendships,
+            half-formed ideas become collaborative projects, and showing up feels completely natural.
+          </p>
+          <a href="clubs.html" class="btn btn-primary btn-lg">Explore Communities →</a>
+          <div class="about-hero-art">
+            <div class="about-art-circle circle-a">✳</div>
+            <div class="about-art-circle circle-b">👥</div>
+            <div class="about-art-circle circle-c">♫</div>
+            <div class="about-art-circle circle-d">&lt;/&gt;</div>
+            <div class="about-art-core">
+              <div style="font-size:36px;">🪐</div>
+              <span>Better<br>together</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- MISSION SECTION -->
+        <section class="about-mission">
+          <div>
+            <div class="eyebrow">WHY WE BUILT CLUBORBIT</div>
+            <h2>Belonging shouldn't be <span>left to chance.</span></h2>
+          </div>
+          <p>
+            Traditional social algorithms reward rage-bait and doom-scrolling. ClubOrbit is designed
+            for genuine peer connection, authentic craft learning, and intimate community spaces.
+            No follower counts to stress over—just real people making real progress.
+          </p>
+        </section>
+
+        <!-- CORE VALUES GRID -->
+        <section class="values-grid">
+          <article>
+            <span class="value-icon lavender">❤️</span>
+            <h3>People over vanity profiles</h3>
+            <p>Real human connection beats a polished bio. We make space for raw work-in-progress, honest vulnerability, and mutual encouragement.</p>
+          </article>
+          <article>
+            <span class="value-icon mint">🧭</span>
+            <h3>Curiosity is a superpower</h3>
+            <p>From vintage 35mm cameras to distributed Rust systems, every interest is celebrated. Beginners and specialists collaborate equally.</p>
+          </article>
+          <article>
+            <span class="value-icon peach">🛡️</span>
+            <h3>Room and safety for everyone</h3>
+            <p>Communities thrive when members feel secure, valued, and respected. We enforce clear zero-tolerance codes of conduct across all circles.</p>
+          </article>
+        </section>
+
+        <!-- HOW IT WORKS SECTION -->
+        <section id="how-it-works" class="how-section">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">THREE INTUITIVE STEPS</div>
+              <h2>Finding your orbit is <span>effortless.</span></h2>
+            </div>
+          </div>
+          <div class="steps-grid">
+            <article>
+              <span>01</span>
+              <h3>Explore what moves you</h3>
+              <p>Browse communities by craft category, active weekly projects, or host format (online vs IRL meetups).</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Show up as yourself</h3>
+              <p>Join a club with one click, introduce yourself in discussions, or RSVP for an interactive workshop.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Let good things happen</h3>
+              <p>Collaborate on real-world projects, receive constructive feedback, and build your circle of lifelong collaborators.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- CORE TEAM SECTION -->
+        <section class="section-block" style="margin-top:56px;">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">THE STEWARDS</div>
+              <h2>Built by community <span>builders.</span></h2>
+              <p>Meet the team committed to creating human-scale community software.</p>
+            </div>
+          </div>
+
+          <div class="club-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="overview-card" style="text-align:center;padding:24px 16px;">
+              <span class="avatar av1" style="width:54px;height:54px;margin:0 auto 12px;font-size:18px;">ML</span>
+              <b>Maya Lin</b>
+              <small style="display:block;color:var(--purple);font-weight:700;margin:3px 0 8px;">Co-Founder & Community Lead</small>
+              <p style="font-size:11px;color:var(--muted);line-height:1.5;">Former community architect at Creative Guild. Passionate about small-group dynamics.</p>
+            </div>
+
+            <div class="overview-card" style="text-align:center;padding:24px 16px;">
+              <span class="avatar av2" style="width:54px;height:54px;margin:0 auto 12px;font-size:18px;">AM</span>
+              <b>Aarav Mehta</b>
+              <small style="display:block;color:var(--purple);font-weight:700;margin:3px 0 8px;">Co-Founder & Product Lead</small>
+              <p style="font-size:11px;color:var(--muted);line-height:1.5;">Obsessed with tactile micro-interactions, clean typography, and accessible web standards.</p>
+            </div>
+
+            <div class="overview-card" style="text-align:center;padding:24px 16px;">
+              <span class="avatar av3" style="width:54px;height:54px;margin:0 auto 12px;font-size:18px;">SC</span>
+              <b>Sofia Chen</b>
+              <small style="display:block;color:var(--purple);font-weight:700;margin:3px 0 8px;">Head of Events</small>
+              <p style="font-size:11px;color:var(--muted);line-height:1.5;">Organizer of 100+ hackathons, photowalks, and indie demo days across 12 countries.</p>
+            </div>
+
+            <div class="overview-card" style="text-align:center;padding:24px 16px;">
+              <span class="avatar av4" style="width:54px;height:54px;margin:0 auto 12px;font-size:18px;">LW</span>
+              <b>Liam Walker</b>
+              <small style="display:block;color:var(--purple);font-weight:700;margin:3px 0 8px;">Trust & Safety Lead</small>
+              <p style="font-size:11px;color:var(--muted);line-height:1.5;">Dedicated to keeping digital communities respectful, friendly, and harassment-free.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/about</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

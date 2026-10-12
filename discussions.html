@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="Community Discussions & Feed on ClubOrbit — Posts, threads, critiques, and ideas from passionate creators.">
+  <title>Community Discussions & Feed — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="clubs.html" class="nav-link">Clubs</a>
+          <a href="discussions.html" class="nav-link active">Discussions</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search discussions..." oninput="searchFilter(this, '.discussion-card', 'h3')">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Vikram Sethi replied to Sana Kapoor in Indie Hackers Hub</p>
+                    <small>15 min ago</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="discussions-page-container">
+        
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">THE COMMUNITY FEED</div>
+            <h1>Good ideas start <span>here.</span></h1>
+            <p>
+              Share an unfiltered journey, ask for code/design critiques, or join discussions
+              that push your craft forward.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('create-discussion-modal')">+ Start a Discussion</button>
+        </div>
+
+        <div class="discussion-layout">
+          <!-- MAIN DISCUSSION FEED -->
+          <div class="discussion-main">
+            
+            <!-- FEED CATEGORY TABS -->
+            <div class="feed-tabs">
+              <button class="feed-tab-active" onclick="filterCategories('.feed-tabs', '.discussion-card', 'data-tag', 'All', 'feed-tab-active')">All</button>
+              <button onclick="filterCategories('.feed-tabs', '.discussion-card', 'data-tag', 'Design Talk', 'feed-tab-active')">Design Talk</button>
+              <button onclick="filterCategories('.feed-tabs', '.discussion-card', 'data-tag', 'Milestone', 'feed-tab-active')">Milestone</button>
+              <button onclick="filterCategories('.feed-tabs', '.discussion-card', 'data-tag', 'Photography', 'feed-tab-active')">Photography</button>
+              <button onclick="filterCategories('.feed-tabs', '.discussion-card', 'data-tag', 'Architecture', 'feed-tab-active')">Architecture</button>
+            </div>
+
+            <!-- COMPOSER TRIGGER -->
+            <button class="composer" onclick="openModal('create-discussion-modal')">
+              <span class="avatar avatar-me">SS</span>
+              <span>What's on your mind today, Sahil? Share an update or ask a question...</span>
+              <span class="composer-plus">+</span>
+            </button>
+
+            <!-- STREAM OF POSTS -->
+            <div class="discussions-stream">
+              
+              <!-- Post 1 (Pinned) -->
+              <article class="discussion-card" data-tag="Design Talk">
+                <div class="discussion-author">
+                  <span class="avatar author-avatar av-lavender">AM</span>
+                  <div>
+                    <div class="author-name-row">
+                      <b>Aarav Mehta</b>
+                      <span class="author-role-tag">Lead</span>
+                    </div>
+                    <small>in <strong>Design Circle</strong> · 2 hours ago</small>
+                  </div>
+                  <span class="pinned-badge">📌 Pinned</span>
+                  <div class="card-mod-controls">
+                    <button class="mod-btn" title="Unpin post" onclick="notify('Post unpinned from top.')">📌</button>
+                    <button class="mod-btn danger" title="Delete post" onclick="if(confirm('Delete this post?')) { this.closest('article').remove(); notify('Post removed.'); }">✕</button>
+                  </div>
+                </div>
+
+                <span class="discussion-tag">Design Talk</span>
+                <h3 onclick="openModal('thread-modal-1')" style="cursor:pointer;">What makes a design system actually stick across a 50-person engineering team?</h3>
+                <p onclick="openModal('thread-modal-1')" style="cursor:pointer;">We spent 8 months building tokens, component primitives, and Figma sync. The real challenge wasn't CSS variables—it was changing the team's mental model and establishing joint ownership.</p>
+
+                <div class="discussion-actions">
+                  <button onclick="openModal('thread-modal-1')">💬 <b>3</b> replies</button>
+                  <button class="liked" onclick="toggleDiscussionLike(this, 1)">♥ <span>142</span></button>
+                  <button class="saved-active" onclick="toggleDiscussionSave(this, 1)">🔖</button>
+                  <button class="share-btn" onclick="notify('Discussion link copied to clipboard!')">↗ Share</button>
+                </div>
+              </article>
+
+              <!-- Post 2 -->
+              <article class="discussion-card" data-tag="Milestone">
+                <div class="discussion-author">
+                  <span class="avatar author-avatar av-mint">SK</span>
+                  <div>
+                    <div class="author-name-row">
+                      <b>Sana Kapoor</b>
+                      <span class="author-role-tag">Founder</span>
+                    </div>
+                    <small>in <strong>Indie Hackers Hub</strong> · 1 hour ago</small>
+                  </div>
+                  <div class="card-mod-controls">
+                    <button class="mod-btn" title="Pin post" onclick="notify('Post pinned to top.')">📌</button>
+                    <button class="mod-btn danger" title="Delete post" onclick="if(confirm('Delete this post?')) { this.closest('article').remove(); notify('Post removed.'); }">✕</button>
+                  </div>
+                </div>
+
+                <span class="discussion-tag">Milestone</span>
+                <h3 onclick="openModal('thread-modal-2')" style="cursor:pointer;">I launched my first paid micro-SaaS side project today! Here are the raw numbers 🚀</h3>
+                <p onclick="openModal('thread-modal-2')" style="cursor:pointer;">After 3 months of late-night coding sessions, 40 customer interview calls, and countless self-doubt moments, we officially closed our first 5 paying annual customers ($1,200 ARR total). Documenting what worked and what flopped.</p>
+
+                <div class="discussion-actions">
+                  <button onclick="openModal('thread-modal-2')">💬 <b>1</b> reply</button>
+                  <button class="liked" onclick="toggleDiscussionLike(this, 2)">♥ <span>95</span></button>
+                  <button onclick="toggleDiscussionSave(this, 2)">🔖</button>
+                  <button class="share-btn" onclick="notify('Discussion link copied to clipboard!')">↗ Share</button>
+                </div>
+              </article>
+
+              <!-- Post 3 -->
+              <article class="discussion-card" data-tag="Photography">
+                <div class="discussion-author">
+                  <span class="avatar author-avatar av-peach">RJ</span>
+                  <div>
+                    <div class="author-name-row">
+                      <b>Rohan Joshi</b>
+                      <span class="author-role-tag">Admin</span>
+                    </div>
+                    <small>in <strong>Lens & Light</strong> · 3 hours ago</small>
+                  </div>
+                  <div class="card-mod-controls">
+                    <button class="mod-btn" title="Pin post" onclick="notify('Post pinned to top.')">📌</button>
+                    <button class="mod-btn danger" title="Delete post" onclick="if(confirm('Delete this post?')) { this.closest('article').remove(); notify('Post removed.'); }">✕</button>
+                  </div>
+                </div>
+
+                <span class="discussion-tag">Photography</span>
+                <h3 onclick="openModal('thread-modal-3')" style="cursor:pointer;">One prime lens for a whole weekend getaway. What are you picking and why?</h3>
+                <p onclick="openModal('thread-modal-3')" style="cursor:pointer;">I am heading to Rajasthan for 48 hours and challenging myself to leave my heavy zoom lenses at home and pack only a single 35mm f/1.8 prime. Curious what focal length everyone would choose for travel storytelling.</p>
+
+                <div class="discussion-actions">
+                  <button onclick="openModal('thread-modal-3')">💬 <b>1</b> reply</button>
+                  <button onclick="toggleDiscussionLike(this, 3)">♥ <span>42</span></button>
+                  <button onclick="toggleDiscussionSave(this, 3)">🔖</button>
+                  <button class="share-btn" onclick="notify('Discussion link copied to clipboard!')">↗ Share</button>
+                </div>
+              </article>
+
+              <!-- Post 4 -->
+              <article class="discussion-card" data-tag="Architecture">
+                <div class="discussion-author">
+                  <span class="avatar author-avatar av-mint">AD</span>
+                  <div>
+                    <div class="author-name-row">
+                      <b>Ananya Deshmukh</b>
+                      <span class="author-role-tag">Staff Eng</span>
+                    </div>
+                    <small>in <strong>Future Stack</strong> · 5 hours ago</small>
+                  </div>
+                  <div class="card-mod-controls">
+                    <button class="mod-btn" title="Pin post" onclick="notify('Post pinned to top.')">📌</button>
+                    <button class="mod-btn danger" title="Delete post" onclick="if(confirm('Delete this post?')) { this.closest('article').remove(); notify('Post removed.'); }">✕</button>
+                  </div>
+                </div>
+
+                <span class="discussion-tag">Architecture</span>
+                <h3 onclick="openModal('thread-modal-4')" style="cursor:pointer;">Running AI models entirely client-side via WebGPU in 2026: Real-world benchmarks</h3>
+                <p onclick="openModal('thread-modal-4')" style="cursor:pointer;">We just ported an on-device semantic search embeddings pipeline to WebGPU using Transformers.js v3. Inference latency dropped from 420ms to 24ms. Local privacy-first intelligence in the browser is officially here.</p>
+
+                <div class="discussion-actions">
+                  <button onclick="openModal('thread-modal-4')">💬 <b>0</b> replies</button>
+                  <button onclick="toggleDiscussionLike(this, 4)">♥ <span>112</span></button>
+                  <button onclick="toggleDiscussionSave(this, 4)">🔖</button>
+                  <button class="share-btn" onclick="notify('Discussion link copied to clipboard!')">↗ Share</button>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- SIDEBAR ASIDE -->
+          <aside class="discussion-sidebar">
+            <div class="sidebar-card welcome-card">
+              <span class="sidebar-icon">✨</span>
+              <h3>Your voice belongs here.</h3>
+              <p>Every thriving community is built by people who show up and share what they're learning.</p>
+              <button class="btn btn-primary full-btn" onclick="openModal('create-discussion-modal')">Start a discussion</button>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-title">
+                <h3>Featured Circles</h3>
+              </div>
+              <a href="clubs.html" class="sidebar-club">
+                <span class="sidebar-club-icon art-lavender">✳</span>
+                <span><b>Design Circle</b><small>2,420 members</small></span>
+                <span>›</span>
+              </a>
+              <a href="clubs.html" class="sidebar-club">
+                <span class="sidebar-club-icon art-mint">&lt;/&gt;</span>
+                <span><b>Future Stack</b><small>4,650 members</small></span>
+                <span>›</span>
+              </a>
+              <a href="clubs.html" class="sidebar-club">
+                <span class="sidebar-club-icon art-mint">↗</span>
+                <span><b>Indie Hackers Hub</b><small>1,840 members</small></span>
+                <span>›</span>
+              </a>
+              <a href="clubs.html" class="sidebar-club">
+                <span class="sidebar-club-icon art-peach">◎</span>
+                <span><b>Lens & Light</b><small>3,100 members</small></span>
+                <span>›</span>
+              </a>
+            </div>
+          </aside>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/discussions</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: THREAD 1 -->
+  <div id="thread-modal-1" class="modal-backdrop">
+    <div class="modal thread-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('thread-modal-1')">✕</button>
+      <div class="thread-main-post">
+        <div class="thread-author-bar">
+          <span class="avatar av-lavender">AM</span>
+          <div>
+            <b>Aarav Mehta</b>
+            <small>in <strong>Design Circle</strong> · 2 hours ago</small>
+          </div>
+          <span class="pinned-badge">📌 Pinned</span>
+        </div>
+
+        <span class="discussion-tag">Design Talk</span>
+        <h2>What makes a design system actually stick across a 50-person engineering team?</h2>
+        <p class="thread-body-text">We spent 8 months building tokens, component primitives, and Figma sync. The real challenge wasn't CSS variables—it was changing the team's mental model and establishing joint ownership between designers and engineers.</p>
+
+        <div class="thread-interactions">
+          <button class="thread-like-btn liked" onclick="toggleDiscussionLike(this, 1)">♥ <span>142</span> likes</button>
+          <span class="thread-count">💬 Comments below</span>
+        </div>
+      </div>
+
+      <div class="thread-comments-section">
+        <h3>Community Comments</h3>
+        <div id="thread-comments-list-1" class="thread-comments-list">
+          <div class="thread-comment">
+            <span class="avatar av2" style="width:28px;height:28px;font-size:10px;">PS</span>
+            <div class="comment-content">
+              <div class="comment-author">
+                <b>Priya Sharma</b>
+                <span class="comment-role">Moderator</span>
+                <small>1 hour ago</small>
+              </div>
+              <p>Having joint office hours where engineers and designers pair-review Figma components in PRs was the absolute game-changer for us.</p>
+            </div>
+          </div>
+          <div class="thread-comment">
+            <span class="avatar av4" style="width:28px;height:28px;font-size:10px;">MC</span>
+            <div class="comment-content">
+              <div class="comment-author">
+                <b>Marcus Chen</b>
+                <span class="comment-role">Member</span>
+                <small>45 min ago</small>
+              </div>
+              <p>Totally agree on tokens. Automated linting in GitHub actions that blocks raw hex colors did 80% of the governance heavy lifting.</p>
+            </div>
+          </div>
+          <div class="thread-comment">
+            <span class="avatar avatar-me" style="width:28px;height:28px;font-size:10px;">SS</span>
+            <div class="comment-content">
+              <div class="comment-author">
+                <b>Sahil Shinde</b>
+                <span class="comment-role">Lead Architect</span>
+                <small>20 min ago</small>
+              </div>
+              <p>Great insight Aarav! Could you share the design token schema you used for dark mode overrides?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIVE COMMENT COMPOSER -->
+        <form class="thread-reply-form" onsubmit="postComment(event, this, 'thread-comments-list-1')">
+          <div class="reply-input-wrap">
+            <input required placeholder="Write a constructive reply...">
+            <button class="btn btn-primary btn-sm" type="submit">Reply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: THREAD 2 -->
+  <div id="thread-modal-2" class="modal-backdrop">
+    <div class="modal thread-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('thread-modal-2')">✕</button>
+      <div class="thread-main-post">
+        <div class="thread-author-bar">
+          <span class="avatar av-mint">SK</span>
+          <div>
+            <b>Sana Kapoor</b>
+            <small>in <strong>Indie Hackers Hub</strong> · 1 hour ago</small>
+          </div>
+        </div>
+        <span class="discussion-tag">Milestone</span>
+        <h2>I launched my first paid micro-SaaS side project today! Here are the raw numbers 🚀</h2>
+        <p class="thread-body-text">After 3 months of late-night coding sessions, 40 customer interview calls, and countless self-doubt moments, we officially closed our first 5 paying annual customers ($1,200 ARR total). Documenting what worked and what flopped.</p>
+      </div>
+      <div class="thread-comments-section">
+        <h3>Community Comments</h3>
+        <div id="thread-comments-list-2" class="thread-comments-list">
+          <div class="thread-comment">
+            <span class="avatar av1" style="width:28px;height:28px;font-size:10px;">VS</span>
+            <div class="comment-content">
+              <div class="comment-author"><b>Vikram Sethi</b><small>45 min ago</small></div>
+              <p>Huge congratulations Sana! The first paying customer is always the hardest.</p>
+            </div>
+          </div>
+        </div>
+        <form class="thread-reply-form" onsubmit="postComment(event, this, 'thread-comments-list-2')">
+          <div class="reply-input-wrap">
+            <input required placeholder="Leave a congratulatory note or question...">
+            <button class="btn btn-primary btn-sm" type="submit">Reply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE DISCUSSION -->
+  <div id="create-discussion-modal" class="modal-backdrop">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('create-discussion-modal')">✕</button>
+      <span class="eyebrow">COMMUNITY VOICE</span>
+      <h2>Start a discussion</h2>
+      <p>Share a thought, ask a question, or kick off a constructive debate.</p>
+      <form class="modal-form" onsubmit="handleCreateDiscussionSubmit(event)">
+        <label>Discussion Title<input id="new-disc-title" required placeholder="What's on your mind?"></label>
+        <div class="form-row">
+          <label>Choose Club
+            <select id="new-disc-club">
+              <option>Design Circle</option>
+              <option>Future Stack</option>
+              <option>Indie Hackers Hub</option>
+              <option>Lens & Light</option>
+              <option>The Sound Room</option>
+            </select>
+          </label>
+          <label>Topic Tag
+            <select id="new-disc-tag">
+              <option>Design Talk</option>
+              <option>Milestone</option>
+              <option>Photography</option>
+              <option>Architecture</option>
+              <option>General</option>
+            </select>
+          </label>
+        </div>
+        <label>Post Content<textarea id="new-disc-body" required rows="4" placeholder="Give the community context..."></textarea></label>
+        <button class="btn btn-primary full-btn" type="submit">Publish Discussion →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

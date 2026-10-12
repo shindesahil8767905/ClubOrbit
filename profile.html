@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080c14">
+  <meta name="description" content="My Profile — Manage your clubs, registered events, bookmarks, and community activity on ClubOrbit.">
+  <title>My Profile & Activity — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="clubs.html" class="nav-link">Clubs</a>
+          <a href="discussions.html" class="nav-link">Discussions</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="profile.html" class="nav-link active">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search clubs, topics..." onkeydown="if(event.key==='Enter') window.location.href='clubs.html';">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Aarav Mehta replied to your comment in Design Circle</p>
+                    <small>5 min ago</small>
+                  </div>
+                </div>
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Reminder: AI Agents Workshop starts this Thursday</p>
+                    <small>2 hours ago</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="profile-page-container">
+        
+        <!-- PROFILE COVER -->
+        <div class="profile-cover"></div>
+
+        <!-- PROFILE HEADER OVERVIEW -->
+        <section class="profile-overview">
+          <div class="profile-avatar-large">
+            SS
+            <span class="online-badge"></span>
+          </div>
+          <div class="profile-intro">
+            <span class="eyebrow">AUTHENTICATED MEMBER PROFILE</span>
+            <h1 id="display-profile-name">Sahil Shinde <span style="color:#38bdf8;font-size:22px;">✓</span></h1>
+            <p id="display-profile-bio">Lead Community Architect & Full-Stack Crafter. Architecting high-signal tech communities, Indie hacking, and building full-stack products.</p>
+            <div class="profile-location">
+              <span id="display-profile-loc">📍 Mumbai, India</span>
+              <span>·</span>
+              <span>📅 Joined March 2025</span>
+              <span>·</span>
+              <span style="background:rgba(2,132,199,0.2);color:var(--purple-light);padding:2px 8px;border-radius:10px;font-weight:700;">Community Lead</span>
+            </div>
+          </div>
+          <button class="btn btn-outline" style="margin-left:auto;" onclick="openModal('edit-profile-modal')">
+            ⚙ Edit Profile
+          </button>
+        </section>
+
+        <!-- STATS COUNTERS -->
+        <div class="profile-stats">
+          <div><b>3</b><span>Clubs Joined</span></div>
+          <div><b>2</b><span>Events Registered</span></div>
+          <div><b>1</b><span>Saved Discussion</span></div>
+          <div><b>4</b><span>Followed Circles</span></div>
+        </div>
+
+        <!-- TWO-COLUMN DASHBOARD (CLUBS & EVENTS) -->
+        <div class="profile-sections">
+          
+          <!-- PANEL 1: MY CLUBS -->
+          <section class="profile-panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">ACTIVE COMMUNITIES</div>
+                <h3>My Clubs (3)</h3>
+              </div>
+              <a href="clubs.html" class="text-link">Explore more →</a>
+            </div>
+            <div class="profile-list-group">
+              <div class="profile-list-item">
+                <span class="sidebar-club-icon art-lavender">✳</span>
+                <div class="profile-item-details">
+                  <b>Design Circle</b>
+                  <small>Design · 2,420 members</small>
+                </div>
+                <div class="card-btn-group">
+                  <a href="clubs.html" class="btn btn-outline btn-xs">View</a>
+                  <button class="icon-btn" style="width:28px;height:28px;font-size:11px;" onclick="notify('You left Design Circle'); this.closest('.profile-list-item').remove();">✕</button>
+                </div>
+              </div>
+
+              <div class="profile-list-item">
+                <span class="sidebar-club-icon art-mint">↗</span>
+                <div class="profile-item-details">
+                  <b>Indie Hackers Hub</b>
+                  <small>Entrepreneurship · 1,840 members</small>
+                </div>
+                <div class="card-btn-group">
+                  <a href="clubs.html" class="btn btn-outline btn-xs">View</a>
+                  <button class="icon-btn" style="width:28px;height:28px;font-size:11px;" onclick="notify('You left Indie Hackers Hub'); this.closest('.profile-list-item').remove();">✕</button>
+                </div>
+              </div>
+
+              <div class="profile-list-item">
+                <span class="sidebar-club-icon art-mint">&lt;/&gt;</span>
+                <div class="profile-item-details">
+                  <b>Future Stack</b>
+                  <small>Technology · 4,650 members</small>
+                </div>
+                <div class="card-btn-group">
+                  <a href="clubs.html" class="btn btn-outline btn-xs">View</a>
+                  <button class="icon-btn" style="width:28px;height:28px;font-size:11px;" onclick="notify('You left Future Stack'); this.closest('.profile-list-item').remove();">✕</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PANEL 2: CONFIRMED EVENTS -->
+          <section class="profile-panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">CONFIRMED GATHERINGS</div>
+                <h3>My Events (2)</h3>
+              </div>
+              <a href="events.html" class="text-link">Browse calendar →</a>
+            </div>
+            <div class="profile-list-group">
+              <div class="profile-list-item">
+                <div class="mini-date date-lavender">
+                  <b>24</b>
+                  <span>OCT</span>
+                </div>
+                <div class="profile-item-details">
+                  <b>AI Agents & Fullstack Tooling</b>
+                  <small>6:00 PM · Online Virtual Room</small>
+                </div>
+                <div class="card-btn-group">
+                  <span style="font-size:10px;background:rgba(16,185,129,0.15);color:#34d399;padding:3px 8px;border-radius:10px;font-weight:700;">🎟 Confirmed</span>
+                  <a href="events.html" class="btn btn-outline btn-xs">Pass</a>
+                </div>
+              </div>
+
+              <div class="profile-list-item">
+                <div class="mini-date date-mint">
+                  <b>02</b>
+                  <span>NOV</span>
+                </div>
+                <div class="profile-item-details">
+                  <b>Game Dev Jam: Retro Pixel Physics</b>
+                  <small>10:00 AM · Discord Voice Jam</small>
+                </div>
+                <div class="card-btn-group">
+                  <span style="font-size:10px;background:rgba(16,185,129,0.15);color:#34d399;padding:3px 8px;border-radius:10px;font-weight:700;">🎟 Confirmed</span>
+                  <a href="events.html" class="btn btn-outline btn-xs">Pass</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RECENT ACTIVITY TIMELINE -->
+        <section class="activity-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow">YOUR DIGITAL FOOTPRINT</div>
+              <h3>Recent Activity Log</h3>
+            </div>
+          </div>
+          <div class="activity-stream">
+            <div class="activity-item-row">
+              <span class="activity-type-icon">💬</span>
+              <div class="activity-item-info">
+                <b>Commented on 'What's one tiny design detail that elevates a UI?'</b>
+                <small>Design Circle · 5 min ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item-row">
+              <span class="activity-type-icon">✳</span>
+              <div class="activity-item-info">
+                <b>Joined Design Circle as an active member</b>
+                <small>Design Circle · Yesterday</small>
+              </div>
+            </div>
+
+            <div class="activity-item-row">
+              <span class="activity-type-icon">🎟</span>
+              <div class="activity-item-info">
+                <b>Registered for 'AI Agents & Fullstack Tooling'</b>
+                <small>Future Stack · 2 days ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item-row">
+              <span class="activity-type-icon">❤️</span>
+              <div class="activity-item-info">
+                <b>Liked Sana Kapoor's milestone post in Indie Hackers Hub</b>
+                <small>Indie Hackers Hub · 3 days ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item-row">
+              <span class="activity-type-icon">✦</span>
+              <div class="activity-item-info">
+                <b>Followed the Future Stack community</b>
+                <small>Future Stack · 5 days ago</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/profile</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT PROFILE -->
+  <div id="edit-profile-modal" class="modal-backdrop">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('edit-profile-modal')">✕</button>
+      <span class="eyebrow">ACCOUNT SETTINGS</span>
+      <h2>Edit Public Profile</h2>
+      <p>Update your public identity and community bio.</p>
+      <form class="modal-form" onsubmit="handleEditProfileSubmit(event)">
+        <label>Full Name<input id="profile-name-input" value="Sahil Shinde" required></label>
+        <label>Location<input id="profile-loc-input" value="Mumbai, India" required></label>
+        <label>Community Bio<textarea id="profile-bio-input" rows="3" required>Lead Community Architect & Full-Stack Crafter. Architecting high-signal tech communities, Indie hacking, and building full-stack products.</textarea></label>
+        <button class="btn btn-primary full-btn" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

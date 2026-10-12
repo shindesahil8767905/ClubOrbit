@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="Discover Clubs & Communities on ClubOrbit — Design, technology, photography, music, entrepreneurship, and gaming.">
+  <title>Explore Clubs & Communities — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="clubs.html" class="nav-link active">Clubs</a>
+          <a href="discussions.html" class="nav-link">Discussions</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search clubs..." oninput="searchFilter(this, '.directory-club-card', 'h3')">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>New announcement posted in Design Circle</p>
+                    <small>10 min ago</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="clubs-page-container">
+        
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">DISCOVER & CONNECT</div>
+            <h1>Find your corner of the <span>orbit.</span></h1>
+            <p>
+              Explore communities built around the crafts, passions, and curiosities you love.
+              Join circles to participate in member discussions, workshops, and projects.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('create-club-modal')">+ Create a Club</button>
+        </div>
+
+        <!-- TOOLBAR: SEARCH & RESET -->
+        <div class="clubs-toolbar">
+          <div class="search-field">
+            <span>🔍</span>
+            <input placeholder="Search clubs by name, craft, or interest..." oninput="searchFilter(this, '.directory-club-card', 'h3')">
+          </div>
+          <button class="btn btn-outline filter-button" onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'All');">
+            Reset filters
+          </button>
+        </div>
+
+        <!-- CATEGORY CHIPS -->
+        <div class="category-chips directory-chips">
+          <button class="chip-active" onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'All')">All</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Technology')">Technology</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Design')">Design</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Photography')">Photography</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Gaming')">Gaming</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Music')">Music</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Entrepreneurship')">Entrepreneurship</button>
+          <button onclick="filterCategories('.directory-chips', '.directory-club-card', 'data-cat', 'Lifestyle')">Lifestyle</button>
+        </div>
+
+        <div class="results-line">
+          <span id="filter-results-count"><b>8</b> communities to discover</span>
+          <button onclick="notify('Sorted by most active member count.');">Most popular ↓</button>
+        </div>
+
+        <!-- FULL CLUBS DIRECTORY GRID -->
+        <div class="club-grid clubs-full-grid">
+          
+          <!-- Club 1 -->
+          <article class="club-card directory-club-card" data-cat="Design">
+            <div class="club-art art-lavender" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">✳</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">CREATIVE</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Design</span>
+                <span class="member-count">👥 2,420</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Design Circle</h3>
+              <p>A vibrant home for curious UX/UI designers, visual thinkers, design system leads, and product crafters.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">A</span>
+                  <span class="avatar av2">M</span>
+                  <span class="avatar av3">S</span>
+                  <span class="avatar-stack-count">+14</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-joined btn-sm" onclick="toggleClubJoin(this, 1, 'Design Circle')">✓ Joined</button>
+                  <button class="icon-follow-btn is-followed" onclick="toggleClubFollow(this, 1, 'Design Circle')" title="Following">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 2 -->
+          <article class="club-card directory-club-card" data-cat="Entrepreneurship">
+            <div class="club-art art-mint" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">↗</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">BUILDERS</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Entrepreneurship</span>
+                <span class="member-count">👥 1,840</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Indie Hackers Hub</h3>
+              <p>Build in public, share honest metrics, swap growth tactics, and ship sustainable software products together.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">S</span>
+                  <span class="avatar av2">V</span>
+                  <span class="avatar av3">R</span>
+                  <span class="avatar-stack-count">+28</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-joined btn-sm" onclick="toggleClubJoin(this, 2, 'Indie Hackers Hub')">✓ Joined</button>
+                  <button class="icon-follow-btn is-followed" onclick="toggleClubFollow(this, 2, 'Indie Hackers Hub')" title="Following">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 3 -->
+          <article class="club-card directory-club-card" data-cat="Photography">
+            <div class="club-art art-peach" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">◎</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">VISUAL</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Photography</span>
+                <span class="member-count">👥 3,100</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Lens & Light</h3>
+              <p>Street photowalks, portrait critiques, film photography darkroom tips, and gear discussions.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">R</span>
+                  <span class="avatar av2">A</span>
+                  <span class="avatar av3">N</span>
+                  <span class="avatar-stack-count">+42</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="toggleClubJoin(this, 3, 'Lens & Light')">+ Join</button>
+                  <button class="icon-follow-btn" onclick="toggleClubFollow(this, 3, 'Lens & Light')" title="Follow">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 4 -->
+          <article class="club-card directory-club-card" data-cat="Music">
+            <div class="club-art art-peach" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">♫</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">AUDIO</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Music</span>
+                <span class="member-count">👥 1,210</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">The Sound Room</h3>
+              <p>Beatmakers, modular synth lovers, film scorers, and audio engineers collaborating on sonic art.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">D</span>
+                  <span class="avatar av2">R</span>
+                  <span class="avatar av3">M</span>
+                  <span class="avatar-stack-count">+18</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="toggleClubJoin(this, 4, 'The Sound Room')">+ Join</button>
+                  <button class="icon-follow-btn" onclick="toggleClubFollow(this, 4, 'The Sound Room')" title="Follow">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 5 -->
+          <article class="club-card directory-club-card" data-cat="Technology">
+            <div class="club-art art-mint" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">&lt;/&gt;</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">TECH</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Technology</span>
+                <span class="member-count">👥 4,650</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Future Stack</h3>
+              <p>Dive deep into AI agents, TypeScript, Rust, distributed systems, open-source architectures, and cloud frontiers.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">A</span>
+                  <span class="avatar av2">D</span>
+                  <span class="avatar av3">K</span>
+                  <span class="avatar-stack-count">+56</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-joined btn-sm" onclick="toggleClubJoin(this, 6, 'Future Stack')">✓ Joined</button>
+                  <button class="icon-follow-btn is-followed" onclick="toggleClubFollow(this, 6, 'Future Stack')" title="Following">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 6 -->
+          <article class="club-card directory-club-card" data-cat="Gaming">
+            <div class="club-art art-lavender" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">🎮</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">GAMES</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Gaming</span>
+                <span class="member-count">👥 2,150</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Indie Game Devs</h3>
+              <p>Unity, Unreal, Godot engines, level design, pixel shaders, game jams, and playtesting circles.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">L</span>
+                  <span class="avatar av2">W</span>
+                  <span class="avatar av3">K</span>
+                  <span class="avatar-stack-count">+34</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="toggleClubJoin(this, 5, 'Indie Game Devs')">+ Join</button>
+                  <button class="icon-follow-btn" onclick="toggleClubFollow(this, 5, 'Indie Game Devs')" title="Follow">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 7 -->
+          <article class="club-card directory-club-card" data-cat="Entrepreneurship">
+            <div class="club-art art-peach" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">✦</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">STARTUPS</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Entrepreneurship</span>
+                <span class="member-count">👥 742</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Founders Table</h3>
+              <p>Intimate, high-trust circle for early-stage founders navigating product-market fit, fundraising, and hiring.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">K</span>
+                  <span class="avatar av2">V</span>
+                  <span class="avatar av3">S</span>
+                  <span class="avatar-stack-count">+12</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="toggleClubJoin(this, 7, 'Founders Table')">+ Join</button>
+                  <button class="icon-follow-btn" onclick="toggleClubFollow(this, 7, 'Founders Table')" title="Follow">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Club 8 -->
+          <article class="club-card directory-club-card" data-cat="Lifestyle">
+            <div class="club-art art-lavender" onclick="openModal('club-details-modal')" style="cursor:pointer;">
+              <span class="club-art-icon">⌖</span>
+              <span class="art-orbit orbit-one"></span>
+              <span class="art-orbit orbit-two"></span>
+              <span class="club-tag">OUTDOORS</span>
+              <button class="card-arrow" onclick="event.stopPropagation(); openModal('club-details-modal');">↗</button>
+            </div>
+            <div class="club-card-body">
+              <div class="club-card-top">
+                <span class="category-label">Lifestyle</span>
+                <span class="member-count">👥 1,530</span>
+              </div>
+              <h3 onclick="openModal('club-details-modal')" style="cursor:pointer;">Weekend Wanderers</h3>
+              <p>Day hikes, heritage walking tours, campsite stargazing, and discovering unseen trails off the beaten path.</p>
+              <div class="club-card-bottom">
+                <div class="avatar-stack">
+                  <span class="avatar av1">S</span>
+                  <span class="avatar av2">G</span>
+                  <span class="avatar av3">M</span>
+                  <span class="avatar-stack-count">+22</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="toggleClubJoin(this, 8, 'Weekend Wanderers')">+ Join</button>
+                  <button class="icon-follow-btn" onclick="toggleClubFollow(this, 8, 'Weekend Wanderers')" title="Follow">★</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/clubs</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- CLUB DETAILS DEDICATED MODAL -->
+  <div id="club-details-modal" class="modal-backdrop">
+    <div class="modal event-details-modal" style="max-width:880px;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('club-details-modal')">✕</button>
+      
+      <div class="club-details-hero" style="border-radius:12px;overflow:hidden;margin-bottom:20px;">
+        <div class="club-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80'); height:160px;">
+          <div class="banner-overlay"></div>
+        </div>
+        <div class="club-hero-content" style="padding:16px 20px;">
+          <div class="club-hero-avatar art-lavender">
+            <span>✳</span>
+          </div>
+          <div class="club-hero-text">
+            <div class="club-hero-badges">
+              <span class="category-pill">Design</span>
+              <span class="tag-pill">CREATIVE</span>
+              <span class="founded-pill">Established Jan 2024</span>
+            </div>
+            <h2>Design Circle</h2>
+            <p>A vibrant home for curious UX/UI designers, visual thinkers, design system leads, and product crafters.</p>
+            <div class="club-hero-stats">
+              <span>👥 <b>2,420</b> members</span>
+              <span>💬 <b>34</b> discussions</span>
+              <span>📅 <b>8</b> upcoming sessions</span>
+            </div>
+          </div>
+          <div class="club-hero-actions">
+            <button class="btn btn-joined btn-sm" onclick="notify('You are an active member of this circle.')">✓ Joined</button>
+            <button class="btn btn-outline btn-sm" onclick="openModal('manage-members-modal')">⚙ Manage Members</button>
+            <button class="btn btn-outline btn-sm" onclick="openModal('announcement-modal')">📢 Broadcast</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="club-tab-nav">
+        <button class="active-tab profile-tab-btn" data-tab="overview" onclick="switchClubTab('overview')">Overview & Guidelines</button>
+        <button class="profile-tab-btn" data-tab="members" onclick="switchClubTab('members')">Members Directory (5)</button>
+        <button class="profile-tab-btn" data-tab="announcements" onclick="switchClubTab('announcements')">Announcements (2)</button>
+      </div>
+
+      <!-- TAB 1: OVERVIEW -->
+      <div id="club-tab-overview" class="club-tab-content">
+        <div class="overview-card leader-card" style="margin-bottom:14px;">
+          <div class="leader-info">
+            <span class="avatar leader-avatar">AM</span>
+            <div>
+              <span class="eyebrow">COMMUNITY LEAD</span>
+              <b>Aarav Mehta</b>
+              <small>Staff Product Designer @ OrbitLab</small>
+            </div>
+          </div>
+          <p>"Welcome to Design Circle! Whether you are a beginner or a veteran, don't hesitate to share your work, ask for feedback, and introduce yourself in discussions."</p>
+        </div>
+
+        <div class="overview-card" style="margin-bottom:14px;">
+          <div class="card-title-bar">
+            <span class="purple-text" style="font-size:18px;">🛡️</span>
+            <h3>Community Guidelines</h3>
+          </div>
+          <div class="rules-list">
+            <div class="rule-item">
+              <span class="rule-num">01</span>
+              <p>Share work-in-progress and constructive feedback with kindness.</p>
+            </div>
+            <div class="rule-item">
+              <span class="rule-num">02</span>
+              <p>Credit original designers and sources in inspirations.</p>
+            </div>
+            <div class="rule-item">
+              <span class="rule-num">03</span>
+              <p>No unsolicited pitching, cold outreach, or commercial spam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: MEMBERS -->
+      <div id="club-tab-members" class="club-tab-content" style="display:none;">
+        <div class="tab-actions-bar">
+          <div>
+            <h3>Member Roster</h3>
+            <p>Active participants and leaders in Design Circle.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('manage-members-modal')">+ Invite Member</button>
+        </div>
+        <div class="members-directory-grid">
+          <div class="member-card">
+            <span class="avatar av1">AM</span>
+            <div class="member-card-details">
+              <b>Aarav Mehta</b>
+              <span class="role-badge-admin">Admin</span>
+              <small>Bengaluru · Joined Jan 2024</small>
+            </div>
+          </div>
+          <div class="member-card">
+            <span class="avatar av2">PS</span>
+            <div class="member-card-details">
+              <b>Priya Sharma</b>
+              <span class="role-badge-mod">Moderator</span>
+              <small>Mumbai · Joined Feb 2024</small>
+            </div>
+          </div>
+          <div class="member-card">
+            <span class="avatar avatar-me">SS</span>
+            <div class="member-card-details">
+              <b>Sahil Shinde (You)</b>
+              <span class="role-badge-member">Lead Architect</span>
+              <small>Mumbai · Joined Mar 2025</small>
+            </div>
+          </div>
+          <div class="member-card">
+            <span class="avatar av3">ER</span>
+            <div class="member-card-details">
+              <b>Elena Rostova</b>
+              <span class="role-badge-member">Member</span>
+              <small>Berlin · Joined Apr 2025</small>
+            </div>
+          </div>
+          <div class="member-card">
+            <span class="avatar av4">MC</span>
+            <div class="member-card-details">
+              <b>Marcus Chen</b>
+              <span class="role-badge-member">Member</span>
+              <small>Singapore · Joined May 2025</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: ANNOUNCEMENTS -->
+      <div id="club-tab-announcements" class="club-tab-content" style="display:none;">
+        <div class="tab-actions-bar">
+          <div>
+            <h3>Official Bulletins</h3>
+            <p>Announcements posted by club leadership.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="openModal('announcement-modal')">+ New Bulletin</button>
+        </div>
+        <div class="announcements-list">
+          <div class="announcement-card pinned">
+            <div class="announcement-header">
+              <span class="pinned-tag">📌 Pinned</span>
+              <b>🎨 Annual Portfolio Review & Critiques kicks off next week!</b>
+              <small>Yesterday at 4:30 PM · By Aarav Mehta</small>
+            </div>
+            <p>We have invited 6 design leads from top tech firms to review member design portfolios. Check the event calendar to reserve your 15-minute slot!</p>
+          </div>
+          <div class="announcement-card">
+            <div class="announcement-header">
+              <b>Figma Tokens 2.0 Workshop Resources now available</b>
+              <small>Oct 8, 2026 · By Priya Sharma</small>
+            </div>
+            <p>Slides, Figma community file template, and recording link have been uploaded to our resources hub.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE CLUB -->
+  <div id="create-club-modal" class="modal-backdrop">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('create-club-modal')">✕</button>
+      <span class="eyebrow">START A MOVEMENT</span>
+      <h2>Create a new community</h2>
+      <p>Bring people together around your craft, hobby, or curiosity.</p>
+      <form class="modal-form" onsubmit="handleCreateClubSubmit(event)">
+        <label>Club Name<input id="new-club-name" required placeholder="e.g. Generative Design Guild"></label>
+        <div class="form-row">
+          <label>Category
+            <select id="new-club-cat">
+              <option>Technology</option>
+              <option>Design</option>
+              <option>Photography</option>
+              <option>Gaming</option>
+              <option>Music</option>
+              <option>Entrepreneurship</option>
+              <option>Lifestyle</option>
+            </select>
+          </label>
+          <label>Color Theme
+            <select id="new-club-color">
+              <option value="lavender">Lavender Indigo</option>
+              <option value="mint">Mint Emerald</option>
+              <option value="peach">Warm Peach</option>
+            </select>
+          </label>
+        </div>
+        <label>Description<textarea id="new-club-desc" required rows="3" placeholder="What is the mission of this club and who should join?"></textarea></label>
+        <button class="btn btn-primary full-btn" type="submit">+ Create Community</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MANAGE MEMBERS -->
+  <div id="manage-members-modal" class="modal-backdrop">
+    <div class="modal manage-members-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('manage-members-modal')">✕</button>
+      <div class="manage-members-header">
+        <span class="eyebrow">LEADERSHIP CONTROLS</span>
+        <h2>Manage Community Members</h2>
+        <p>Invite collaborators, assign moderator roles, and oversee roster.</p>
+      </div>
+      <form class="invite-form" onsubmit="event.preventDefault(); notify('Invite link sent to ' + document.getElementById('inv-email').value); closeModal('manage-members-modal');">
+        <input id="inv-email" type="email" required placeholder="Enter colleague's email address...">
+        <button class="btn btn-primary btn-sm" type="submit">Send Invite</button>
+      </form>
+      <div class="member-roster-list" style="margin-top:16px;">
+        <div class="roster-item" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);">
+          <div><b>Aarav Mehta</b><small style="display:block;color:var(--muted);">Admin · Founder</small></div>
+          <span class="role-badge-admin">Admin</span>
+        </div>
+        <div class="roster-item" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);">
+          <div><b>Priya Sharma</b><small style="display:block;color:var(--muted);">Moderator</small></div>
+          <span class="role-badge-mod">Moderator</span>
+        </div>
+        <div class="roster-item" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+          <div><b>Sahil Shinde</b><small style="display:block;color:var(--muted);">Lead Architect</small></div>
+          <span class="role-badge-member">Lead</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BROADCAST ANNOUNCEMENT -->
+  <div id="announcement-modal" class="modal-backdrop">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('announcement-modal')">✕</button>
+      <span class="eyebrow">OFFICIAL BULLETIN</span>
+      <h2>Broadcast Announcement</h2>
+      <p>Send a pinned update to all members of Design Circle.</p>
+      <form class="modal-form" onsubmit="event.preventDefault(); notify('Announcement broadcasted to members!'); closeModal('announcement-modal');">
+        <label>Headline<input required placeholder="e.g. 📢 Portfolio review slots are live!"></label>
+        <label>Announcement Body<textarea required rows="4" placeholder="Details and instructions for members..."></textarea></label>
+        <label class="checkbox-label" style="display:flex;gap:8px;align-items:center;font-size:12px;">
+          <input type="checkbox" checked>
+          <span>Pin to top of club page</span>
+        </label>
+        <button class="btn btn-primary full-btn" type="submit">Broadcast Now →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

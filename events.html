@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="Upcoming Events & Gatherings on ClubOrbit — Workshops, photowalks, game jams, and founder roundtables.">
+  <title>Upcoming Events & Workshops — ClubOrbit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- STANDARD APP SHELL -->
+  <div id="standard-app-shell" class="app-shell">
+    
+    <!-- FIXED IDENTICAL HEADER -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html" class="brand" aria-label="ClubOrbit Home">
+          <span class="brand-mark">🪐</span>
+          <span>club<span class="brand-orbit">orbit</span></span>
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link active">Events</a>
+          <a href="clubs.html" class="nav-link">Clubs</a>
+          <a href="discussions.html" class="nav-link">Discussions</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="profile.html" class="nav-link">Profile</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="mockup-toggle-btn" onclick="toggleMockupMode()" title="Toggle 9:16 Mockup Frame / Full Responsive View">
+            <span>📱</span> <span>Mockup (9:16)</span>
+          </button>
+
+          <label class="header-search">
+            <span>🔍</span>
+            <input placeholder="Search events..." oninput="searchFilter(this, '.event-card', 'h3')">
+            <kbd>Enter</kbd>
+          </label>
+
+          <div class="auth-mode-badge-wrapper">
+            <button id="auth-mode-badge" class="auth-mode-badge logged-in" onclick="toggleAuthMode()" title="Click to toggle Public Guest / Member Admin view">
+              <span class="mode-dot"></span>
+              <span id="auth-mode-text">Member (Auth)</span>
+            </button>
+          </div>
+
+          <div class="notification-wrap">
+            <button class="icon-btn notification-btn" aria-label="Notifications" onclick="document.getElementById('notif-dropdown')?.classList.toggle('show');">
+              <span>🔔</span><i></i>
+            </button>
+            <div id="notif-dropdown" class="notifications-dropdown">
+              <div class="notifications-header">
+                <b>Notifications</b>
+                <span class="unread-pill">2 new</span>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item unread" onclick="notify('Notification marked as read'); this.parentElement.parentElement.classList.remove('show');">
+                  <div class="notification-dot"></div>
+                  <div>
+                    <p>Reminder: AI Agents Workshop starts this Thursday at 6 PM</p>
+                    <small>1 hour ago</small>
+                  </div>
+                </div>
+              </div>
+              <button class="notifications-footer-btn" onclick="notify('Notifications cleared'); this.parentElement.classList.remove('show');">Clear all</button>
+            </div>
+          </div>
+
+          <div id="header-user-actions"></div>
+
+          <button class="mobile-menu icon-btn" onclick="document.getElementById('main-nav')?.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <span>☰</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-content">
+      <div class="events-page-container">
+        
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">MAKE IT HAPPEN IRL & ONLINE</div>
+            <h1>Put it on your <span>calendar.</span></h1>
+            <p>
+              Hands-on workshops, portfolio critiques, city photowalks, and deep dive roundtables.
+              Every week has something extraordinary to experience with your community.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('create-event-modal')">+ Host an Event</button>
+        </div>
+
+        <!-- EVENTS HERO BANNER -->
+        <div class="events-hero">
+          <div class="events-hero-copy">
+            <span class="event-hero-pill">📅 ACTIVE COMMUNITY CALENDAR</span>
+            <h2>Less passive scrolling.<br>More <span>meaningful gathering.</span></h2>
+            <p>
+              Connect beyond chat rooms. Learn actionable skills directly from industry operators
+              and build lasting friendships with members who share your drive.
+            </p>
+          </div>
+          <div class="calendar-illustration">
+            <div class="cal-top"><span></span><span></span><span></span></div>
+            <div class="cal-grid">
+              <span>1</span><span>2</span><span>3</span><span class="cal-highlight">4</span><span>5</span><span>6</span><span>7</span>
+              <span>8</span><span class="cal-highlight">9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+              <span class="cal-highlight">15</span><span>16</span><span>17</span><span class="cal-highlight">18</span><span>19</span><span>20</span><span>21</span>
+            </div>
+            <div class="cal-float">✓ 4 Live Sessions this week</div>
+          </div>
+        </div>
+
+        <!-- EVENTS SECTION & FILTER CHIPS -->
+        <div class="section-heading events-heading">
+          <div>
+            <div class="eyebrow">SAVE YOUR SPOT</div>
+            <h2>Upcoming Gatherings</h2>
+            <p>Explore virtual sessions and in-person experiences.</p>
+          </div>
+          <div class="category-chips compact-chips">
+            <button class="chip-active" onclick="filterCategories('.compact-chips', '.event-card', 'data-type', 'All')">All Events</button>
+            <button onclick="filterCategories('.compact-chips', '.event-card', 'data-type', 'Online')">Online</button>
+            <button onclick="filterCategories('.compact-chips', '.event-card', 'data-type', 'In-Person')">In-Person</button>
+          </div>
+        </div>
+
+        <!-- EVENTS LIST -->
+        <div class="event-list">
+          
+          <!-- Event 1 -->
+          <article class="event-card" data-type="Online">
+            <div class="event-date date-lavender" onclick="openModal('event-modal-1')" style="cursor:pointer;">
+              <b>24</b>
+              <span>OCT</span>
+            </div>
+            <div class="event-info">
+              <div class="event-badge-row">
+                <span class="event-type">Workshop</span>
+                <span class="online-tag">💻 Virtual</span>
+              </div>
+              <h3 onclick="openModal('event-modal-1')">AI Agents & Fullstack Tooling: From Concept to Production</h3>
+              <div class="event-meta">
+                <span>🕒 6:00 PM - 8:00 PM IST</span>
+                <span>📍 Online · Zoom Live Room</span>
+              </div>
+              <div class="event-host">
+                <span class="host-dot">F</span>
+                <span>Hosted by <b>Future Stack</b></span>
+                <span class="attendees">👥 186 attending</span>
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openModal('event-modal-1')">Event Details</button>
+              <button class="btn btn-joined btn-sm" onclick="toggleEventRSVP(this, 1, 'AI Agents & Fullstack Tooling')">✓ Registered</button>
+            </div>
+          </article>
+
+          <!-- Event 2 -->
+          <article class="event-card" data-type="In-Person">
+            <div class="event-date date-peach" onclick="openModal('event-modal-2')" style="cursor:pointer;">
+              <b>27</b>
+              <span>OCT</span>
+            </div>
+            <div class="event-info">
+              <div class="event-badge-row">
+                <span class="event-type">Photowalk</span>
+                <span class="inperson-tag">📍 In-Person</span>
+              </div>
+              <h3 onclick="openModal('event-modal-2')">Golden Hour Street Photography Walk: South Bombay Heritage</h3>
+              <div class="event-meta">
+                <span>🕒 4:30 PM - 6:30 PM IST</span>
+                <span>📍 Marine Drive Promenade, Mumbai</span>
+              </div>
+              <div class="event-host">
+                <span class="host-dot">L</span>
+                <span>Hosted by <b>Lens & Light</b></span>
+                <span class="attendees">👥 48 attending</span>
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openModal('event-modal-2')">Event Details</button>
+              <button class="btn btn-primary btn-sm" onclick="toggleEventRSVP(this, 2, 'Golden Hour Street Photography Walk')">RSVP Now</button>
+            </div>
+          </article>
+
+          <!-- Event 3 -->
+          <article class="event-card" data-type="Online">
+            <div class="event-date date-mint" onclick="openModal('event-modal-3')" style="cursor:pointer;">
+              <b>02</b>
+              <span>NOV</span>
+            </div>
+            <div class="event-info">
+              <div class="event-badge-row">
+                <span class="event-type">Game Jam</span>
+                <span class="online-tag">💻 Virtual</span>
+              </div>
+              <h3 onclick="openModal('event-modal-3')">Game Dev Jam: Retro Pixel Physics & Micro Mechanics</h3>
+              <div class="event-meta">
+                <span>🕒 10:00 AM - 5:00 PM IST</span>
+                <span>📍 Online · Discord Voice Jam Stages</span>
+              </div>
+              <div class="event-host">
+                <span class="host-dot">I</span>
+                <span>Hosted by <b>Indie Game Devs</b></span>
+                <span class="attendees">👥 92 attending</span>
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openModal('event-modal-3')">Event Details</button>
+              <button class="btn btn-joined btn-sm" onclick="toggleEventRSVP(this, 3, 'Game Dev Jam: Retro Pixel Physics')">✓ Registered</button>
+            </div>
+          </article>
+
+          <!-- Event 4 -->
+          <article class="event-card" data-type="In-Person">
+            <div class="event-date date-mint" onclick="openModal('event-modal-4')" style="cursor:pointer;">
+              <b>08</b>
+              <span>NOV</span>
+            </div>
+            <div class="event-info">
+              <div class="event-badge-row">
+                <span class="event-type">Roundtable</span>
+                <span class="inperson-tag">📍 In-Person</span>
+              </div>
+              <h3 onclick="openModal('event-modal-4')">SaaS Founders Pitch & Coffee: Transparent Teardowns</h3>
+              <div class="event-meta">
+                <span>🕒 11:00 AM - 1:00 PM IST</span>
+                <span>📍 WeWork BKC Lounge, Mumbai</span>
+              </div>
+              <div class="event-host">
+                <span class="host-dot">I</span>
+                <span>Hosted by <b>Indie Hackers Hub</b></span>
+                <span class="attendees">👥 35 attending</span>
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openModal('event-modal-4')">Event Details</button>
+              <button class="btn btn-primary btn-sm" onclick="toggleEventRSVP(this, 4, 'SaaS Founders Pitch & Coffee')">RSVP Now</button>
+            </div>
+          </article>
+
+          <!-- Event 5 -->
+          <article class="event-card" data-type="Online">
+            <div class="event-date date-peach" onclick="openModal('event-modal-5')" style="cursor:pointer;">
+              <b>15</b>
+              <span>NOV</span>
+            </div>
+            <div class="event-info">
+              <div class="event-badge-row">
+                <span class="event-type">Lab & Jam</span>
+                <span class="online-tag">💻 Virtual</span>
+              </div>
+              <h3 onclick="openModal('event-modal-5')">Modular Synth & Sound Design: Crafting Tactile Textures</h3>
+              <div class="event-meta">
+                <span>🕒 7:00 PM - 8:30 PM IST</span>
+                <span>📍 Online · Live Stream & Patch Notes</span>
+              </div>
+              <div class="event-host">
+                <span class="host-dot">T</span>
+                <span>Hosted by <b>The Sound Room</b></span>
+                <span class="attendees">👥 74 attending</span>
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openModal('event-modal-5')">Event Details</button>
+              <button class="btn btn-primary btn-sm" onclick="toggleEventRSVP(this, 5, 'Modular Synth & Sound Design')">RSVP Now</button>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- FIXED IDENTICAL FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">🪐</span>
+            <span>club<span class="brand-orbit">orbit</span></span>
+          </a>
+          <p>
+            Find your people. Follow your curiosity.<br>
+            Create lifelong connections and build meaningful projects together.
+          </p>
+          <div class="social-links">
+            <button aria-label="Instagram" onclick="notify('Instagram: @ClubOrbitHQ')">📸</button>
+            <button aria-label="LinkedIn" onclick="notify('LinkedIn: ClubOrbit Platform')">💼</button>
+            <button aria-label="GitHub" onclick="notify('GitHub: github.com/cluborbit')">🐙</button>
+            <button aria-label="Twitter/X" onclick="notify('X: @ClubOrbitApp')">🐦</button>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <b>Explore</b>
+          <a href="index.html">Home & Spotlight</a>
+          <a href="events.html">Upcoming Events</a>
+          <a href="clubs.html">Discover Clubs</a>
+          <a href="discussions.html">Community Feed</a>
+        </div>
+
+        <div class="footer-col">
+          <b>ClubOrbit</b>
+          <a href="about.html">About Our Mission</a>
+          <a href="contact.html">Contact & Support</a>
+          <a href="about.html#how-it-works">How It Works</a>
+          <a href="contact.html#faqs">Safety Guidelines</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <b>Stay in the Loop ✨</b>
+          <p>Curated community spotlights, new clubs, and top events delivered monthly.</p>
+          <form onsubmit="event.preventDefault(); notify('Subscribed to ClubOrbit dispatch! Welcome aboard.'); this.reset();">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" aria-label="Subscribe">→</button>
+          </form>
+          <small>No spam ever. Unsubscribe at any time with one click.</small>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 ClubOrbit, Inc. All rights reserved.</span>
+        <span class="footer-legal">
+          <button onclick="notify('Privacy Policy: Your data is never sold or shared.')">Privacy</button>
+          <button onclick="notify('Terms of Service: Respect fellow club members and hosts.')">Terms</button>
+          <button onclick="notify('Security: SOC-2 Compliant & End-to-End Encrypted.')">Security</button>
+          <span>🌐 English (US)</span>
+        </span>
+        <span class="made-with">Crafted for belonging ❤️</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 9:16 LAPTOP BROWSER MOCKUP CONTAINER -->
+  <div id="mockup-mode-container" class="mockup-viewport-outer">
+    <div class="mockup-control-strip">
+      <div class="mockup-badge">
+        <span>📱</span> <span>9:16 Aspect Ratio Mockup Frame (1080×1920)</span>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="toggleMockupMode()">
+        🖥 Switch to Full Responsive Web
+      </button>
+    </div>
+    <div class="browser-mockup-frame">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address-bar">
+          <span>🔒</span>
+          <span class="address-text">https://cluborbit.io/events</span>
+        </div>
+        <button class="exit-mockup-btn" onclick="toggleMockupMode()" title="Close Mockup Frame">✕</button>
+      </div>
+      <div id="browser-viewport-inner" class="browser-viewport-inner"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: EVENT DETAILS 1 -->
+  <div id="event-modal-1" class="modal-backdrop">
+    <div class="modal event-details-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('event-modal-1')">✕</button>
+      <div class="event-details-header">
+        <div class="event-date-badge date-lavender">
+          <b>24</b>
+          <span>OCT</span>
+        </div>
+        <div>
+          <span class="event-type-pill">Workshop</span>
+          <h2>AI Agents & Fullstack Tooling: From Concept to Production</h2>
+          <div class="event-hosted-by">Hosted by <b>Future Stack</b> · Category: Technology</div>
+        </div>
+      </div>
+
+      <div class="event-meta-grid">
+        <div class="meta-card">
+          <div><b>Date & Time</b><small>24 OCT · 6:00 PM - 8:00 PM IST</small></div>
+        </div>
+        <div class="meta-card">
+          <div><b>Location</b><small>Online · Zoom Live Room</small></div>
+        </div>
+        <div class="meta-card">
+          <div><b>Attendance</b><small>186 / 250 registered</small></div>
+        </div>
+      </div>
+
+      <div class="event-section-block">
+        <h3>About this event</h3>
+        <p>A deep-dive technical masterclass building autonomous AI workflows using modern TypeScript, function-calling models, and client-side WebGPU acceleration. Includes code templates and live Q&A.</p>
+      </div>
+
+      <div class="event-section-block">
+        <h3>Event Agenda</h3>
+        <div class="agenda-timeline">
+          <div class="agenda-item"><span class="agenda-time">6:00 PM</span><span class="agenda-topic">Architecture Overview & Mental Models</span></div>
+          <div class="agenda-item"><span class="agenda-time">6:40 PM</span><span class="agenda-topic">Live Code: Tool Calling & Memory Sync</span></div>
+          <div class="agenda-item"><span class="agenda-time">7:30 PM</span><span class="agenda-topic">Interactive Q&A and Resource Sharing</span></div>
+        </div>
+      </div>
+
+      <div class="event-action-bar">
+        <div class="ticket-pass-box">
+          <div class="ticket-pass-info">
+            <div>
+              <b>You are Registered! ✓</b>
+              <p>Confirmation Pass #CO-1829 · Free Community Admission</p>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="notify('Pass downloaded to your device!');">Save Pass 🎟</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EVENT DETAILS 2 -->
+  <div id="event-modal-2" class="modal-backdrop">
+    <div class="modal event-details-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('event-modal-2')">✕</button>
+      <div class="event-details-header">
+        <div class="event-date-badge date-peach">
+          <b>27</b>
+          <span>OCT</span>
+        </div>
+        <div>
+          <span class="event-type-pill">Photowalk</span>
+          <h2>Golden Hour Street Photography Walk: South Bombay Heritage</h2>
+          <div class="event-hosted-by">Hosted by <b>Lens & Light</b> · Category: Photography</div>
+        </div>
+      </div>
+
+      <div class="event-meta-grid">
+        <div class="meta-card">
+          <div><b>Date & Time</b><small>27 OCT · 4:30 PM - 6:30 PM IST</small></div>
+        </div>
+        <div class="meta-card">
+          <div><b>Location</b><small>Marine Drive Promenade, Mumbai</small></div>
+        </div>
+        <div class="meta-card">
+          <div><b>Attendance</b><small>48 / 60 registered</small></div>
+        </div>
+      </div>
+
+      <div class="event-section-block">
+        <h3>About this walk</h3>
+        <p>Grab your camera or phone! We meet at Marine Drive for an inspiring 2-hour photo walk capturing golden reflections, street candids, and art deco architecture.</p>
+      </div>
+
+      <div class="event-action-bar">
+        <div class="register-cta-box">
+          <div>
+            <b>Free Community Registration</b>
+            <p>12 spots remaining. Instant confirmation sent to your profile.</p>
+          </div>
+          <button class="btn btn-primary btn-lg" onclick="notify('You are registered for the Photowalk!'); closeModal('event-modal-2');">Register Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE EVENT -->
+  <div id="create-event-modal" class="modal-backdrop">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('create-event-modal')">✕</button>
+      <span class="eyebrow">GATHER THE COMMUNITY</span>
+      <h2>Host a new event</h2>
+      <p>Schedule a workshop, hackathon, or casual meetup.</p>
+      <form class="modal-form" onsubmit="handleCreateEventSubmit(event)">
+        <label>Event Title<input id="new-event-title" required placeholder="e.g. Masterclass: Tactile Micro-Interactions"></label>
+        <div class="form-row">
+          <label>Host Club
+            <select id="new-event-club">
+              <option>Design Circle</option>
+              <option>Future Stack</option>
+              <option>Indie Hackers Hub</option>
+              <option>Lens & Light</option>
+              <option>Indie Game Devs</option>
+            </select>
+          </label>
+          <label>Format
+            <select id="new-event-format">
+              <option value="Online">Online / Virtual</option>
+              <option value="In-Person">In-Person</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Date (Day & Month)
+            <div style="display:flex;gap:8px;">
+              <input id="new-event-day" style="width:70px;" value="29" required>
+              <input id="new-event-month" style="flex:1;" value="OCT" required>
+            </div>
+          </label>
+          <label>Time<input id="new-event-time" value="7:00 PM - 8:30 PM IST" required></label>
+        </div>
+        <label>Location / Zoom Link<input id="new-event-place" value="Online · Zoom Live Room" required></label>
+        <label>Description<textarea id="new-event-desc" rows="3" placeholder="What will attendees learn or experience?"></textarea></label>
+        <button class="btn btn-primary full-btn" type="submit">📅 Publish Event</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+      <span class="eyebrow">✨ WELCOME TO CLUBORBIT</span>
+      <h2>Sign in or Join</h2>
+      <p>Discover vibrant communities, meet fellow creators, and belong anywhere.</p>
+      <div class="demo-credentials-card">
+        <b>⚡ Quick 1-Click Access:</b>
+        <p>Sign in instantly as member & club lead Sahil Shinde:</p>
+        <button type="button" class="btn btn-primary full-btn" onclick="appState.isLoggedIn = true; saveState(); updateAuthUI(); closeModal('auth-modal'); notify('Welcome back Sahil Shinde!');">
+          Sign In as Sahil Shinde (Lead)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span>✓</span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
